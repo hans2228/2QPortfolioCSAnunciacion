@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Show List of Students Who Signed-Up</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 20px;
+  color: #000;
+}
+
+h1 {
+  margin-bottom: 5px;
+}
+
+.author {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+
+label {
+  font-weight: bold;
+}
+
+select {
+  margin-left: 10px;
+  padding: 5px;
+  min-width: 220px;
+  border: 2px solid #1d4ed8;
+  border-radius: 4px;
+}
+
+.total {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th {
+  background-color: #0b1a8f;
+  color: white;
+  padding: 8px;
+  border: 1px solid black;
+}
+
+td {
+  padding: 8px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+.note {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: gray;
+}
+
+.message {
+  margin-top: 15px;
+  font-style: italic;
+}
+</style>
+
+<script>
+function loadSignups() {
+  const raw = localStorage.getItem("clubSignups");
+  const signups = raw ? JSON.parse(raw) : [];
+
+  const filter = document.getElementById("clubFilter").value;
+  const tbody = document.getElementById("tableBody");
+  const totalSpan = document.getElementById("totalCount");
+  const message = document.getElementById("message");
+
+  tbody.innerHTML = "";
+  message.innerText = "";
+
+  if (signups.length === 0) {
+    totalSpan.innerText = "0";
+    message.innerText = "No sign-ups have been saved.";
+    return;
+  }
+
+  let displayData = signups;
+
+  // Filter only when a specific club is chosen
+  if (filter !== "ALL") {
+    displayData = signups.filter(s => s.club === filter);
+  }
+
+  if (displayData.length === 0) {
+    totalSpan.innerText = "0";
+    message.innerText = "No sign-ups for this club.";
+    return;
+  }
+
+  displayData.forEach(s => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${s.club}</td>
+      <td>${s.studentID}</td>
+      <td>${s.fullname}</td>
+      <td>Grade ${s.grade}</td>
+      <td>${s.email}</td>
+      <td>${s.mobile}</td>
+      <td>${s.status}</td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  totalSpan.innerText = displayData.length;
+}
+</script>
+</head>
+
+<body onload="loadSignups()">
+
+<h1>Show List of Students Who Signed-Up</h1>
+<p class="author">by ANUNCIACION Hans</p>
+
+<a href="Q3_2GSectionLastName.html">Back to Signup</a>
+
+<br><br>
+
+<label>
+  Select Your Club
+  <select id="clubFilter" onchange="loadSignups()">
+    <option value="ALL">-- select an option --</option>
+    <option value="Acts">ACTS</option>
+    <option value="Bravura">BRAVURA</option>
+    <option value="Invictus">INVICTUS</option>
+    <option value="Sagala">SAGALA</option>
+  </select>
+</label>
+
+<p class="total">Total Signup : <span id="totalCount">0</span></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Club</th>
+      <th>ID</th>
+      <th>Fullname</th>
+      <th>Grade</th>
+      <th>Email</th>
+      <th>Mobile</th>
+      <th>Intern|Extern</th>
+    </tr>
+  </thead>
+  <tbody id="tableBody"></tbody>
+</table>
+
+<p class="note">
+  When user selects a club, then only sign-ups for that club should be displayed
+  and the Total Sign-up should only be for that club.
+</p>
+
+<p id="message" class="message"></p>
+
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PSHS Club Application</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Unique Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      padding: 30px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    form {
+      background: #ffffff;
+      color: #333;
+      max-width: 700px;
+      margin: auto;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    fieldset {
+      border: 2px solid #2c5364;
+      margin-bottom: 20px;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    legend {
+      padding: 5px 12px;
+      background: #2c5364;
+      color: #fff;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1.5px solid #aaa;
+      font-family: 'JetBrains Mono', monospace;
+      transition: 0.3s;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* Focus style */
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #2c5364;
+      box-shadow: 0 0 6px rgba(44,83,100,0.6);
+    }
+
+    /* Invalid on blur */
+    .invalid {
+      border-color: red;
+      background-color: #ffecec;
+    }
+
+    .radio-group {
+      margin-top: 8px;
+    }
+
+    .radio-group input {
+      width: auto;
+      margin-right: 5px;
+    }
+
+    button, input[type="reset"] {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-right: 10px;
+    }
+
+    button {
+      background: #2c5364;
+      color: white;
+    }
+
+    input[type="reset"] {
+      background: #aaa;
+      color: #000;
+    }
+
+    button:hover, input[type="reset"]:hover {
+      opacity: 0.85;
+    }
+  </style>
+
+  <script>
+    function confirmSubmit() {
+      return confirm("Are you sure you want to submit this application?");
+    }
+
+    function confirmReset() {
+      return confirm("Are you sure you want to clear all entered information?");
+    }
+
+    function checkEmpty(el) {
+      if (el.value.trim() === "") {
+        el.classList.add("invalid");
+      } else {
+        el.classList.remove("invalid");
+      }
+    }
+  </script>
+</head>
+
+<body>
+
+<h1>PSHS Club / Organization Application</h1>
+
+<form method="post" action="submit"
+      onsubmit="return confirmSubmit()"
+      onreset="return confirmReset()">
+
+  <!-- FIELDSET 1–4 -->
+  <fieldset>
+    <legend>Personal Information</legend>
+
+    <label>
+      Student ID:
+      <input type="number" name="studentid" required onblur="checkEmpty(this)">
+    </label>
+
+    <label>
+      Full Name:
+      <input type="text" name="fullname" required onblur="checkEmpty(this)">
+    </label>
+
+    <label>
+      Birthday:
+      <input type="date" name="birthday" required onblur="checkEmpty(this)">
+    </label>
+
+    <label>
+      Email Address:
+      <input type="email" name="email" required onblur="checkEmpty(this)">
+    </label>
+  </fieldset>
+
+  <!-- FIELDSET 5–8 -->
+  <fieldset>
+    <legend>Application Details</legend>
+
+    <label>
+      Mobile Phone:
+      <input type="text" name="mobile" required onblur="checkEmpty(this)">
+    </label>
+
+    <label>
+      Grade Level:
+      <select name="grade" required onblur="checkEmpty(this)">
+        <option value="">-- Select Grade --</option>
+        <option value="7">Grade Seven</option>
+        <option value="8">Grade Eight</option>
+        <option value="9">Grade Nine</option>
+        <option value="10">Grade Ten</option>
+        <option value="11">Grade Eleven</option>
+        <option value="12">Grade Twelve</option>
+      </select>
+    </label>
+
+    <label>
+      Intern / Extern:
+      <div class="radio-group">
+        <input type="radio" name="status" value="I" required> Intern
+        <input type="radio" name="status" value="E"> Extern
+      </div>
+    </label>
+
+    <label>
+      Preferred Organization / Club:
+      <select name="club" required onblur="checkEmpty(this)">
+        <option value="">-- Select Club --</option>
+        <option value="ACT">ACTS</option>
+        <option value="BRV">BRAVURA</option>
+        <option value="EXP">EXPOSURE</option>
+        <option value="INV">INVICTUS</option>
+        <option value="SAG">SAGALA</option>
+      </select>
+    </label>
+
+    <label>
+      Why do you want to join?
+      <textarea name="reason" required onblur="checkEmpty(this)"></textarea>
+    </label>
+  </fieldset>
+
+  <button type="submit">Submit Application</button>
+  <input type="reset" value="Reset Form">
+
+</form>
+
+</body>
+</html>
